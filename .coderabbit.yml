@@ -1,6 +1,6 @@
 reviews:
   smart_review_skipping: false # Skips files with trivial changes
-  profile: "chill" # Reduces the intensity of reviews, focusing on critical issues
+  profile: 'chill' # Reduces the intensity of reviews, focusing on critical issues
   request_changes_workflow: true # Enables automatic change requests
   high_level_summary: true # Provides concise summaries instead of detailed comments
   poem: false # Disables whimsical poems in reviews
