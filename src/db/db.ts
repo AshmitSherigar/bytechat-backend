@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import env from '../configs/env.js';
+import env from '../config/env.js';
 
 const connectDB = async (): Promise<void> => {
   const database_url = env.DATABASE_URL;
