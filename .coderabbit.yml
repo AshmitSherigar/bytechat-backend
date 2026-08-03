@@ -8,5 +8,7 @@ reviews:
   auto_review:
     enabled: true # Enables automatic reviews
     drafts: false # Skips reviews for draft PRs
+    base_branches:
+      - 'develop/.*'
 chat:
   auto_reply: true
