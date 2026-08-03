@@ -20,20 +20,26 @@ export class ValidationError extends AppError {
   }
 }
 
-export class PasswordMismatchError extends AppError {
-  constructor() {
-    super('username or password is not valid', STATUS_CODES.BAD_REQUEST);
+export class UnauthorizedError extends AppError {
+  constructor(message: string) {
+    super(message, STATUS_CODES.UNAUTHORIZED);
+  }
+}
+
+export class ForbiddenError extends AppError {
+  constructor(message: string) {
+    super(message, STATUS_CODES.FORBIDDEN);
   }
 }
 
 export class EntityNotFoundError extends AppError {
   constructor(message: string) {
-    super(message, STATUS_CODES.BAD_REQUEST);
+    super(message, STATUS_CODES.NOT_FOUND);
   }
 }
 
 export class EntityAlreadyExistsError extends AppError {
   constructor(message: string) {
-    super(message, STATUS_CODES.BAD_REQUEST);
+    super(message, STATUS_CODES.CONFLICT);
   }
 }

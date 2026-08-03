@@ -25,9 +25,24 @@ export const registerUser = async (req: Request, res: Response) => {
     .json({ success: true, message: 'User register successfully', accessToken });
 };
 
-export const logoutUser = (req: Request, res: Response) => {
+export const logoutUser = async (req: Request, res: Response) => {
+  // on client also delete the access token
+  const refreshToken = req.cookies.refreshToken;
+
+  await AuthService.logout(refreshToken);
+
   res.clearCookie('refreshToken');
   return res.status(STATUS_CODES.OK).json({ success: true, message: 'User logout successfully' });
 };
 
-export const refreshUser = (req: Request, res: Response) => {};
+export const refreshToken = async (req: Request, res: Response) => {
+  const oldRefreshToken = req.cookies.refreshToken;
+  res.clearCookie('refreshToken');
+  const { accessToken, refreshToken } = await AuthService.refresh(oldRefreshToken);
+
+  res.cookie('refreshToken', refreshToken, cookieConfig);
+
+  return res
+    .status(STATUS_CODES.OK)
+    .json({ success: true, message: "Token's Rotated Successfully", accessToken });
+};
