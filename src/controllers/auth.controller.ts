@@ -19,8 +19,10 @@ export const registerController = async (req: Request, res: Response) => {
 
     const newUser = await User.create({ username, password });
 
-    const access_secret = process.env.ACCESS_TOKEN_SECRET || 'jwtSecret';
-    const accessToken = jwt.sign({ userId: newUser._id }, access_secret);
+    const access_secret = process.env.ACCESS_TOKEN_SECRET;
+    if (!access_secret) throw Error('Access Token Missing');
+
+    const accessToken = jwt.sign({ userId: newUser._id }, access_secret, { expiresIn: '30d' });
 
     return res
       .status(STATUS_CODES.CREATED)
@@ -54,8 +56,10 @@ export const loginController = async (req: Request, res: Response) => {
         .json({ success: true, message: 'Username or password do not match' });
     }
 
-    const access_secret = process.env.ACCESS_TOKEN_SECRET || 'jwtSecret';
-    const accessToken = jwt.sign({ userId: user._id }, access_secret);
+    const access_secret = process.env.ACCESS_TOKEN_SECRET;
+    if (!access_secret) throw Error('Access Token Missing');
+    const accessToken = jwt.sign({ userId: user._id }, access_secret, { expiresIn: '30d' });
+
     return res
       .status(STATUS_CODES.CREATED)
       .json({ success: true, message: 'User logged in successfully', accessToken });
